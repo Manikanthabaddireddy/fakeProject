@@ -1,0 +1,24 @@
+{
+	"name": "schedule_trigger_incremental",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "execute_incremental",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2023-05-16T10:56:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

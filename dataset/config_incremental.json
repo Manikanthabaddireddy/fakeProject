@@ -1,0 +1,54 @@
+{
+	"name": "config_incremental",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "src_ds"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "source_container",
+				"type": "varchar"
+			},
+			{
+				"name": "source_folder",
+				"type": "varchar"
+			},
+			{
+				"name": "source_filename",
+				"type": "varchar"
+			},
+			{
+				"name": "destination_container",
+				"type": "varchar"
+			},
+			{
+				"name": "destination_folder",
+				"type": "varchar"
+			},
+			{
+				"name": "destination_filename",
+				"type": "varchar"
+			},
+			{
+				"name": "water_mark",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "config",
+			"table": "incremental"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

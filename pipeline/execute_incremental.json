@@ -1,0 +1,96 @@
+{
+	"name": "execute_incremental",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute_inc_src_stg",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "increment_all_src_stg",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute_inc_stg_raw",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Wait1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "incremental_all_stg_raw",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Execute_inc_src_stg",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute_inc_src_stg",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Execute_inc_stg_raw",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-43.eastus.logic.azure.com:443/workflows/fbccebfe6ad1469798b3570655f560b3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4oTzntw7P-LN7EymWH6Yfs_8_As_7s8E8vbEXa6uEGo",
+					"method": "POST",
+					"body": {
+						"value": "{\n    'pipelinename' : '@{pipeline().Pipeline}',\n    'datafactoryname' : '@{pipeline().DataFactory}',\n    'runid' : '@{pipeline().RunId}'\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Execute_incremental"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T05:37:21Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

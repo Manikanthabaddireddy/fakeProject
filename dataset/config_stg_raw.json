@@ -1,0 +1,50 @@
+{
+	"name": "config_stg_raw",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "src_ds"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "stage_container",
+				"type": "varchar"
+			},
+			{
+				"name": "stage_folder",
+				"type": "varchar"
+			},
+			{
+				"name": "stage_filename",
+				"type": "varchar"
+			},
+			{
+				"name": "destination_container",
+				"type": "varchar"
+			},
+			{
+				"name": "destination_folder",
+				"type": "varchar"
+			},
+			{
+				"name": "destination_filename",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "config",
+			"table": "stage_raw"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
